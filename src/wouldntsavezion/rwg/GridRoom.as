@@ -31,30 +31,41 @@ package wouldntsavezion.rwg {
 			}
 		}
 		
-		public function getNeighboringOpenNodes():Vector.<GridNode> {
+		public function getNodes():Vector.<GridNode> {
+			var nodes:Vector.<GridNode> = new Vector.<GridNode>;
+			for (var i:uint = 0; i < getHeight(); i++) {
+				for (var j:uint = 0; j < getWidth(); j++) {
+					var node:GridNode = grid.getNodeFromPosition(new Vector2(getX() + j, getY() + i));
+					nodes.push(node);
+				}
+			}
+			return nodes;
+		}
+		
+		public function getNeighboringNodes():Vector.<GridNode> {
 			var i:uint = 0;
 			var x:uint = getX();
 			var y:uint = getY();
 			var width:uint = getWidth();
 			var height:uint = getHeight();
 			
-			var open_nodes:Vector.<GridNode> = new Vector.<GridNode>;
+			var neighbor_nodes:Vector.<GridNode> = new Vector.<GridNode>;
 			
 			for (i = x; i < x + width; i++){
 				var node_top:GridNode = grid.getNodeFromPosition(new Vector2(i, y - 1));
 				var node_bottom:GridNode = grid.getNodeFromPosition(new Vector2(i, y + height));
-				if (node_top && node_top.isOpen) open_nodes.push(node_top);
-				if (node_bottom && node_bottom.isOpen) open_nodes.push(node_bottom);
+				if (node_top && getY() > 0) neighbor_nodes.push(node_top);
+				if (node_bottom && getY() + getHeight() < grid.height) neighbor_nodes.push(node_bottom);
 			}
 			
 			for (i = y; i < y + height; i++){
 				var node_right:GridNode = grid.getNodeFromPosition(new Vector2(x + width, i));
 				var node_left:GridNode = grid.getNodeFromPosition(new Vector2(x - 1, i));
-				if (node_right && node_right.isOpen) open_nodes.push(node_right);
-				if (node_left && node_left.isOpen) open_nodes.push(node_left);
+				if (node_right && getX() + getWidth() < grid.width) neighbor_nodes.push(node_right);
+				if (node_left && getX() > 0) neighbor_nodes.push(node_left);
 			}
 			
-			return open_nodes;
+			return neighbor_nodes;
 		}
 		
 		public function getX():uint {
