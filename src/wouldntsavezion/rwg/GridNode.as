@@ -4,15 +4,12 @@ package wouldntsavezion.rwg {
 		private var grid:Grid = null;
 		private var neighbors:Vector.<GridNode> = null;
 		private var position:Vector2 = null;
-		private var open:Boolean = true;
+		
+		public var isOpen:Boolean = true;
 		
 		public function GridNode(_grid:Grid, _position:Vector2) {
 			grid = _grid;
 			position = _position;
-		}
-		
-		public function isOpen():Boolean {
-			return open;
 		}
 		
 		public function getX():uint {
@@ -51,6 +48,10 @@ package wouldntsavezion.rwg {
 			}
 			
 			neighbors = new Vector.<GridNode>(possible_neighbors);
+		}
+		
+		public function toString():String {
+			return 'GridNode(' + getX() + ', ' + getY() + ')';
 		}
 	}
 }
