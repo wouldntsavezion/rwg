@@ -58,6 +58,9 @@ package wouldntsavezion.rwg {
 					open_nodes = getNeighboringOpenNodes(rooms);
 				}
 			}
+			for (var i:uint = 0; i < rooms.length; i++){
+				rooms[i].assignToNodes();
+			}
 		}
 		
 		private function getNeighboringOpenNodes(_rooms:Vector.<GridRoom>):Vector.<GridNode>{

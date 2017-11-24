@@ -1,14 +1,21 @@
 package wouldntsavezion.rwg {
+	import wouldntsavezion.hrd.PathfinderNode;
 	import wouldntsavezion.rtp.Vector2;
 	public class GridRoom {
 		private var position:Vector2 = null;
 		private var size:Vector2 = null;
 		private var grid:Grid = null;
 		
+		public var pathfinderNode:PathfinderNode = null;
+		public var used:Boolean = false;
+		
 		public function GridRoom(_grid:Grid, _position:Vector2, _size:Vector2) {
 			grid = _grid;
 			position = _position;
 			size = _size;
+			
+			assignToNodes();
+			makePathfinderNode();
 		}
 		
 		public function checkPossible():Boolean {
@@ -66,6 +73,26 @@ package wouldntsavezion.rwg {
 			}
 			
 			return neighbor_nodes;
+		}
+		
+		public function getNeighboringRooms():Vector.<GridRoom> {
+			var nodes:Vector.<GridNode> = getNeighboringNodes();
+			var rooms:Vector.<GridRoom> = new Vector.<GridRoom>();
+			for (var i:uint = 0; i < nodes.length; i++) {
+				if (rooms.indexOf(nodes[i].room) == -1) rooms.push(nodes[i].room);
+			}
+			return rooms;
+		}
+		
+		public function assignToNodes():void {
+			var nodes:Vector.<GridNode> = getNodes();
+			for (var i:uint = 0; i < nodes.length; i++) {
+				nodes[i].room = this;
+			}
+		}
+		
+		private function makePathfinderNode():void {
+			pathfinderNode = new PathfinderNode(0, 1, null, null, Math.random() * 10000, getX() + getWidth() / 2, getY() + getHeight() / 2, 0, false);
 		}
 		
 		public function getX():uint {

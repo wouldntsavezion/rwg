@@ -1,4 +1,5 @@
 package wouldntsavezion.rwg {
+	import wouldntsavezion.hrd.PathfinderNode;
 	import wouldntsavezion.rtp.Vector2;
 	public class GridNode {
 		private var grid:Grid = null;
@@ -6,6 +7,7 @@ package wouldntsavezion.rwg {
 		private var position:Vector2 = null;
 		
 		public var isOpen:Boolean = true;
+		public var room:GridRoom = null;
 		
 		public function GridNode(_grid:Grid, _position:Vector2) {
 			grid = _grid;
